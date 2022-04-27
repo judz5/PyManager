@@ -8,3 +8,6 @@ Python/SQL Password Manager
 
 
 
+We have alot of freedom with this project, and i want something new to code so here is a python/sql password manager to replace keeping all my passwords in my notes.
+
+
