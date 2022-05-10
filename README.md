@@ -15,4 +15,5 @@ We have alot of freedom with this project, and i want something new to code so h
   
 https://www.bluespace.tech/blog/evolution-of-password-manager/second-generation-password-manager.html
 
+https://cryptobook.nakov.com/symmetric-key-ciphers/aes-encrypt-decrypt-examples
 
