@@ -2,6 +2,10 @@ import pyfiglet, re
 from data_control import *
 
 
+def pw_query():
+    password = input('Enter Master Password : ')
+    return password
+
 def title():
     print(pyfiglet.figlet_format("PyManager", font = "slant"))
 

@@ -32,3 +32,45 @@
   - make master key
   - decrypt the pw with master key and copy to clipboard
 
+
+
+SALT SHOULD BE STORED WITH HASH
+
+EX: ThisIsSalt:12089ffjq921023jfa
+
+
+on config start, make user input masterpw (confirm 2x)
+hash and store in sql or file (salt)
+
+ask user for masterPW at start
+hash and compare to stored masterpw hash 
+
+if right then allow access
+
+then take that masterpw they inputed, adds salt
+puts through PBKDF2 To make the key
+
+encyption : 
+
+take key and plaintext (add IV to plaintext)
+
+use key to encrypt plaintext+IV(1fkljslj:password) through AES 
+
+save to sql as (IV:PasswordHash)
+
+
+
+Decrpyt : 
+
+use key generate method to get key
+
+get the cipher and IV from sql 
+
+pass key and cipher and iv through AES decryption (boom)
+
+
+
+
+on config user sets a master password, we then salt this master password and save the salt 
+
+next time the user enters they enter the master password and we again salt it with the saved salt, and use as our key
