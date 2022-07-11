@@ -1,6 +1,6 @@
 import psycopg2, subprocess
 
-# testing new mac
+# testing new macbook pro 14inch
 
 def connect():
     try:
