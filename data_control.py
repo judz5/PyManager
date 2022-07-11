@@ -1,5 +1,7 @@
 import psycopg2, subprocess
 
+# testing new mac
+
 def connect():
     try:
         connection = psycopg2.connect(user='judz', password='judz', host='127.0.0.1', database='password_storage')
