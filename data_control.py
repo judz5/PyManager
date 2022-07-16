@@ -1,4 +1,4 @@
-import psycopg2, subprocess
+import psycopg2, subprocess, hash_control, menu_control, binascii
 
 def connect():
     try:
@@ -12,9 +12,23 @@ def send(password, email, username, url, app_name):
         connection = connect()
         cursor = connection.cursor()
         postgres_insert_query = """ INSERT INTO accounts (password, email, username, url, app_name) VALUES (%s, %s, %s, %s, %s)"""
-        record_to_insert = (password, email, username, url, app_name)
-        cursor.execute(postgres_insert_query, record_to_insert)
-        connection.commit()
+        salt = hash_control.get_salt()
+        key = hash_control.make_masterkey(menu_control.pw_query(), salt)
+        cipherTextArr = hash_control.encrypt(password, key)
+        cipherText = binascii.hexlify(cipherTextArr[0]).decode('utf-8') + ":" + (str)(cipherTextArr[1])
+       # record_to_insert = (cipherText, email, username, url, app_name)
+       # cursor.execute(postgres_insert_query, record_to_insert)
+       # connection.commit()
+        print('Cipher Text : ', cipherText)
+
+        cipherArr = cipherText.split(':')
+        cipher = str.encode(cipherArr[0])
+        iv = str.encode(cipherArr[1])
+        print(cipher, iv)
+        plainText = hash_control.decrypt(cipher, iv, key)
+        print('PlainText : ', plainText)
+
+
     except (Exception, psycopg2.Error) as error:
         print(error)
 

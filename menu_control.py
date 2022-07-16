@@ -4,7 +4,12 @@ from data_control import *
 
 def pw_query():
     password = input('Enter Master Password : ')
-    return password
+    password2 = input('Re-Enter Master Password : ')
+    if(password != password2):
+        print('Passwords do not match!')
+        pw_query()
+    else:
+        return password
 
 def title():
     print(pyfiglet.figlet_format("PyManager", font = "slant"))

@@ -5,4 +5,5 @@ title()
 print(('-'*23),' Config ',('-'*22))
 
 print("Weclome to PyManger")
+print("")
 
