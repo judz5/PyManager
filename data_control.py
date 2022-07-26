@@ -1,5 +1,7 @@
 import psycopg2, subprocess, hash_control, menu_control, binascii
 
+# testing new macbook pro 14inch
+
 def connect():
     try:
         connection = psycopg2.connect(user='judz', password='judz', host='127.0.0.1', database='password_storage')
