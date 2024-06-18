@@ -18,10 +18,13 @@ def setup_db():
 
         cursor.execute(make_table)
         connection.commit()
+
+        hash_control.make_salt()
+
         print("Table Created")
     
-    except sqlite3.Error as err:
-        print("Error making table :: " + err)
+    except (Exception, sqlite3.Error) as error:
+        print("Error making table :: " + error)
     finally:
         connection.close()
 
@@ -36,7 +39,7 @@ def send(password, email, username, url, app_name):
     try:
         connection = connect()
         cursor = connection.cursor()
-        sqlite_insert_query = """ INSERT INTO accounts (password, email, username, url, app_name) VALUES (%s, %s, %s, %s, %s)"""
+        sqlite_insert_query = """ INSERT INTO accounts (password, email, username, url, application) VALUES (?, ?, ?, ?, ?)"""
         salt = hash_control.get_salt()
         key = hash_control.make_masterkey(menu_control.pw_query(), salt)
         cipherTextArr = hash_control.encrypt(password, key)
@@ -45,14 +48,15 @@ def send(password, email, username, url, app_name):
         record_to_insert = (cipherText, email, username, url, app_name)
         cursor.execute(sqlite_insert_query, record_to_insert)
         connection.commit()
-        print('Cipher Text : ', cipherText)
 
-        cipherArr = cipherText.split(':')
-        cipher = str.encode(cipherArr[0])
-        iv = str.encode(cipherArr[1])
-        print(cipher, iv)
-        plainText = hash_control.decrypt(cipher, iv, key)
-        print('PlainText : ', plainText)
+        # print('Cipher Text : ', cipherText)
+
+        # cipherArr = cipherText.split(':')
+        # cipher = binascii.unhexlify(cipherArr[0])
+        # iv = int(cipherArr[1])
+        # print(cipher, iv)
+        # plainText = hash_control.decrypt(cipher, iv, key)
+        # print('PlainText : ', plainText)
 
 
     except (Exception, sqlite3.Error) as error:
@@ -64,20 +68,28 @@ def find_pass(app_name):
     try:
         connection = connect()
         cursor = connection.cursor()
-        sqlite_find_query = """ SELECT email, username, password FROM accounts WHERE app_name = '""" + app_name + "'"
-        cursor.execute(sqlite_find_query, app_name)
+        sqlite_find_query = """ SELECT email, username, password FROM accounts WHERE application = ?"""
+        cursor.execute(sqlite_find_query, (app_name,))
         connection.commit()
         pw = cursor.fetchone()
         if not(pw==None):
             print('Email : ',pw[0])
             print('Username : ',pw[1])
-            print('Password : ',pw[2])
+
+            cipherArr = pw[2].split(':')
+            cipher = binascii.unhexlify(cipherArr[0])
+            iv = int(cipherArr[1])
+            key = hash_control.make_masterkey(menu_control.pw_query(), hash_control.get_salt())
+            plainText = hash_control.decrypt(cipher, iv, key)
+
+            print('\nPassword : ', str(plainText))
+
             # subprocess.run('pbcopy', universal_newlines=True, input=pw[2])
             # print("\nPassword Copied To Clipboard.")
         else:
             print('No Account Found')
     
-    except (Exception(), sqlite3.Error) as error:
+    except (Exception, sqlite3.Error) as error:
         print(error)
     finally:
         connection.close()
@@ -87,13 +99,13 @@ def all_accounts():
 
         connection = connect()
         cursor = connection.cursor()
-        sqlite_find_query = """ SELECT app_name FROM accounts """
+        sqlite_find_query = """ SELECT application FROM accounts """
         cursor.execute(sqlite_find_query)
         connection.commit()
         app_names = cursor.fetchall()
         return(app_names)
 
-    except (Exception(), sqlite3.Error) as error:
+    except (Exception, sqlite3.Error) as error:
         print(error)
     finally:
         connection.close()
