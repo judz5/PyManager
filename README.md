@@ -1,24 +1,42 @@
-# PyManager
+        ____        __  ___
+       / __ \__  __/  |/  /___ _____  ____ _____ ____  _____
+      / /_/ / / / / /|_/ / __ `/ __ \/ __ `/ __ `/ _ \/ ___/
+     / ____/ /_/ / /  / / /_/ / / / / /_/ / /_/ /  __/ /
+    /_/    \__, /_/  /_/\__,_/_/ /_/\__,_/\__, /\___/_/
+          /____/                         /____/
 
-![Postgres](https://img.shields.io/badge/postgres-%23316192.svg?style=for-the-badge&logo=postgresql&logoColor=white)
-![](https://img.shields.io/badge/Python-14354C?style=for-the-badge&logo=python&logoColor=white)
-
-## 2022 CSHS Cybersecurity (Choose Your Own Adventure Project)
-Python/SQL Password Manager
-
-We have alot of freedom with this project, and i want something new to code so here is a python/sql password manager to replace keeping all my passwords in my notes.
-
-## Rubric (0/50)
-  - [ ] Writeup: Research + Works Cited (20)
-  - [ ] Presentation: Engaging and Responds to Questions Well (20)
-  - [ ] Program and/or Demonstration (10)
-  
-https://www.bluespace.tech/blog/evolution-of-password-manager/second-generation-password-manager.html
-
-https://cryptobook.nakov.com/symmetric-key-ciphers/aes-encrypt-decrypt-examples
 
 ---
 
-## 2024 Update
+![](https://img.shields.io/badge/SQLite-07405E?style=for-the-badge&logo=sqlite&logoColor=white)
+![](https://img.shields.io/badge/Python-14354C?style=for-the-badge&logo=python&logoColor=white)
 
-This was a cool project that I never actually finished, Im coming back it now and will be refactoring to Sqlite and actually making it work.
+# PyManager - Secure Password Manager
+A secure and easy to use password managment application written in Python. Passwords are encypted using AES-256, with Password-Based Key Derivation for ultimate security. Data is stored with sqlite for ease of setup and use.
+
+## Setup
+
+1. **Clone the repository:**
+
+   ```bash
+   git clone https://github.com/judz5/PyManager
+   cd PyManager
+   ```
+2. **Intstall required librarys**
+
+   ```bash
+   pip install -r requirements.txt
+   ```
+3. **Run the Main Script**
+
+   ```bash
+   python3 main_control.py
+   ```
+
+*If its your first time running the application, be sure to choose option 5 to configure the database before attempting to add any accounts.*
+
+---
+
+https://www.bluespace.tech/blog/evolution-of-password-manager/second-generation-password-manager.html
+https://cryptobook.nakov.com/symmetric-key-ciphers/aes-encrypt-decrypt-examples
+
