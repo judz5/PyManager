@@ -17,3 +17,8 @@ https://www.bluespace.tech/blog/evolution-of-password-manager/second-generation-
 
 https://cryptobook.nakov.com/symmetric-key-ciphers/aes-encrypt-decrypt-examples
 
+---
+
+## 2024 Update
+
+This was a cool project that I never actually finished, Im coming back it now and will be refactoring to Sqlite and actually making it work.
