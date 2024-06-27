@@ -1,4 +1,4 @@
-import pyfiglet, re
+import pyfiglet, re, string, random
 from data_control import *
 
 
@@ -42,7 +42,18 @@ def add_account():
     url = input('Enter the Website URL : ')
     email = input('Enter Account Email : ')
     username = input('Enter Account Username : ')
-    password = input('Enter Account Password : ')
+
+    while(True):
+        generate_bool = input("Would you like to Generate a password? (y/n): ")
+        if(validate_input(generate_bool)):
+            break
+        else:
+            "Invalid input!"
+    
+    if(generate_bool.lower() == 'y'):
+        password = generate_password()
+    else:
+        password = input('Enter Account Password : ')
     send(password, email, username, url, app_name)
     print("Done!")
     menu()
@@ -79,6 +90,56 @@ def account_list():
     find_pass(keyList.get(choice))
     menu()
 
+def generate_password():
+    length = int(input("Enter Password Length: "))
+
+    special_characters = '!@#$%^&*'
+
+    while(True):
+        letter_bool = input("Use Letters (y/n): ")
+        if(validate_input(letter_bool)):
+            break
+        else:
+            print("invalid input!")
+
+    while(True):
+        digit_bool = input("Use Digits (y/n): ")
+        if(validate_input(digit_bool)):
+            break
+        else:
+            print("invalid input!")
+
+    while(True):
+        specChar_bool = input("Use Speical Characters (y/n): ")
+        if(validate_input(specChar_bool)):
+            break
+        else:
+            print("invalid input!")
+    
+    chars = ''
+    if(letter_bool.lower() == 'y'):
+        chars += string.ascii_letters
+    if(digit_bool.lower() == 'y'):
+        chars += string.digits
+    if(specChar_bool.lower() == 'y'):
+        chars += special_characters
+    
+    if not chars:
+        print("Invalid selections!")
+        return None
+
+    password = ''
+    for i in range(length):
+        password += random.choice(chars)
+
+    print("Generated Password : " + password)
+    return password
+
+
+def validate_input(choice): 
+    if(choice.lower() != "y" and choice.lower() != "n"):
+        return False
+    return True
 
 
     

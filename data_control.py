@@ -23,8 +23,8 @@ def setup_db():
 
         print("Table Created")
     
-    except (Exception, sqlite3.Error) as error:
-        print("Error making table :: " + error)
+    except (Exception, sqlite3.Error) as err:
+        print("Error making table :: " + err)
     finally:
         connection.close()
 
@@ -48,16 +48,6 @@ def send(password, email, username, url, app_name):
         record_to_insert = (cipherText, email, username, url, app_name)
         cursor.execute(sqlite_insert_query, record_to_insert)
         connection.commit()
-
-        # print('Cipher Text : ', cipherText)
-
-        # cipherArr = cipherText.split(':')
-        # cipher = binascii.unhexlify(cipherArr[0])
-        # iv = int(cipherArr[1])
-        # print(cipher, iv)
-        # plainText = hash_control.decrypt(cipher, iv, key)
-        # print('PlainText : ', plainText)
-
 
     except (Exception, sqlite3.Error) as error:
         print(error)
